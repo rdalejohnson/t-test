@@ -1,6 +1,7 @@
 library(ggpubr)
 library(dplyr)
 
+#https://stackoverflow.com/questions/36699272/why-is-message-a-better-choice-than-print-in-r-for-writing-a-package
 
 #basic example, randomly generating a sample of values from the
 #normal distribution
@@ -71,7 +72,14 @@ pValue <- shapiro$p.value
 #One-sample t-test
 # RETURNS AN H-TEST OBJECT
 
-tTest <- t.test(my_data$weight, mu=25)
+sample.Mean <- mean(my_data$weight)
+sample.stdev <- sd(my_data$weight)
+sample.stdError <- sample.stdev/sqrt(length(my_data$weight))
+t_statistic_step_by_step <- (sample.Mean - 25)/sample.stdError
+p_value_by_hand <- 2*pt(-abs(t_statistic_step_by_step), 
+                        length(my_data$weight)-1, lower.tail=TRUE)
+
+tTest <- t.test(my_data$weight, mu=25, conf.level = 0.95)
 
 #dissecting the t test result
 
@@ -86,5 +94,18 @@ hypothesisSides <- tTest$method
 parameter.Name <- names(tTest$parameter)[1]
 degreesOfFreedom <- tTest$parameter[1]
 
+pValue <- tTest$p.value
+
+cat("t-statistic:", tResult, "\n")
+cat("sides: ", degreesOfFreedom, "\n")
+cat("Degrees of Freedom:", degreesOfFreedom, "\n")
+cat("p-value:", pValue, "\n")
 
 
+#http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals3.html
+
+set.seed(6733)
+treeVolume <- c(rnorm(75, mean = 36500, sd = 2000))
+
+
+plot( x=my_data$weight, type="l", y=dt(my_data$weight,9), xlim=c(0, 25), ylim=c(0,100), col='red' )
