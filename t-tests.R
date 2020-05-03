@@ -102,10 +102,20 @@ cat("Degrees of Freedom:", degreesOfFreedom, "\n")
 cat("p-value:", pValue, "\n")
 
 
-#http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals3.html
+#https://www.youtube.com/watch?v=qCowRPmRmno
 
-set.seed(6733)
-treeVolume <- c(rnorm(75, mean = 36500, sd = 2000))
+mileage = c(11601, 8987, 12166, 9657, 10143, 8230, 3111, 13009, 7891, 10392)
 
+t.test(mileage, 
+       mu=12000,  #null hypothesis, alternative hypothesis is 2 sided.
+       alternative = "two.sided", 
+       conf.level = 0.95)
 
-plot( x=my_data$weight, type="l", y=dt(my_data$weight,9), xlim=c(0, 25), ylim=c(0,100), col='red' )
+t.statistic.manually <- (mean(mileage)-12000)/(sd(mileage)/sqrt(length(mileage)))
+2*pt(t.statistic.manually, length(mileage)-1)
+
+#https://www.dummies.com/education/math/statistics/plotting-t-base-r-graphics/
+
+plot(x=seq(-4,4,.1), y=dt(seq(-4,4,.1), 3), type="l", lty="dotted",
+     ylim = c(0,.4), xlab="t", ylab = "f(t)")
+
