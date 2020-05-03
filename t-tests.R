@@ -114,8 +114,24 @@ t.test(mileage,
 t.statistic.manually <- (mean(mileage)-12000)/(sd(mileage)/sqrt(length(mileage)))
 2*pt(t.statistic.manually, length(mileage)-1)
 
+curve(dt(x,2,0.02), from=-5, to=6)
+
+curve(dt(x-0.8,2), from=-5, to=6 ,  add=TRUE)
+
+points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
+
 #https://www.dummies.com/education/math/statistics/plotting-t-base-r-graphics/
 
 plot(x=seq(-4,4,.1), y=dt(seq(-4,4,.1), 3), type="l", lty="dotted",
      ylim = c(0,.4), xlab="t", ylab = "f(t)")
 
+
+curve(dt(x, 30), from = -5, to = 5, col = "orange", 
+      xlab = "quantile", ylab = "density", lwd = 2)
+curve(dt(x, 10), from = -5, to = 5, col = "dark green", add = TRUE, lwd = 2)
+curve(dt(x, 5), from = -5, to = 5, col = "sky blue", add = TRUE, lwd = 2)
+curve(dt(x, 1), from = -5, to = 5, col = "grey40", add = TRUE, lwd = 2)
+legend("topleft", legend = paste0("DF = ", c(1, 5, 10, 30)),
+       col = c("grey40", "sky blue", "dark green", "orange"),
+       lty = 1, lwd = 2)
+points(2.6, 0.3,  col = "red")
