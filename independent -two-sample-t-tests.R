@@ -1,3 +1,6 @@
+# https://lindeloev.github.io/tests-as-linear/
+
+
 # http://www.sthda.com/english/wiki/wiki.php?id_contents=7600
 
 # Women's weights
@@ -20,13 +23,16 @@ var.test(x,y)
 
 ###############  data in two separate numeric vectors
 
-
+#WELCH'S t-test
 #htest object is returned:
 
 two.sample.ttest <- t.test(x,y)
 
 two.sample.ttest
 
+
+two.sample.not.welch.ttest <- t.test(x,y, var.equal = TRUE)
+two.sample.not.welch.ttest
 
 
 ################# if data were in a dataframe:
@@ -39,3 +45,19 @@ d<-as.data.frame(list(
 two.sample.dataframe.ttest <-t.test(weight ~ group, data=d)
 
 two.sample.dataframe.ttest
+
+####################
+
+two.sample.not.welch.ttest$p.value
+two.sample.not.welch.ttest$conf.int
+
+two.sample.ttest$p.value
+two.sample.ttest$conf.int
+
+
+
+#Linear model version
+#https://scientificallysound.org/2017/06/08/t-test-as-linear-models-r/
+
+t.test.lm = lm(weight ~ group, data=d) 
+summary(t.test.lm)
