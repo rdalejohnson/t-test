@@ -1,3 +1,5 @@
+library(car)
+
 # https://lindeloev.github.io/tests-as-linear/
 
 
@@ -45,6 +47,27 @@ d<-as.data.frame(list(
 two.sample.dataframe.ttest <-t.test(weight ~ group, data=d)
 
 two.sample.dataframe.ttest
+
+
+#https://www.statology.org/levenes-test-r/
+#are the variances equal?
+#null hypothesis: variances among the two groups are equal
+#alternative hypothesis: variances among the two groups are NOT equal
+#Levene's test produces a test statistic and a corresponding p-value.
+#If the p-value is below your pre-selected significance level, you can
+#reject the NULL hypothesis
+
+levene <- leveneTest(weight ~ group, data=d)
+
+boxplot(
+        weight ~ group,
+        data = d,
+        main = "Weight By Gender",
+        xlab = "gender",
+        ylab = "weight",
+        col = "steelblue",
+        border = "black")
+
 
 ####################
 
